@@ -1,6 +1,7 @@
 package cn.tyl.bilitask.task;
 
 import cn.tyl.bilitask.entity.Data;
+import cn.tyl.bilitask.entity.response.RData;
 import cn.tyl.bilitask.entity.response.RespnseEntity;
 import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.utils.Request;

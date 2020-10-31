@@ -2,10 +2,10 @@ package cn.tyl.bilitask.task.impl;
 
 import cn.tyl.bilitask.entity.Data;
 import cn.tyl.bilitask.entity.response.RespnseEntity;
+import cn.tyl.bilitask.entity.response.SimpleResponseEntity;
 import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.task.Task;
 import cn.tyl.bilitask.utils.RequestUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -37,24 +37,27 @@ public class NewDailyTask implements Task {
     /**
      * 获取历史观看视频
      * api.bilibili.com/x/web-interface/history/cursor?type=archive&ps=20
+     *
      * @param ps 数量
+     * @return
      * @author tyl
      * @Time 2020-10-31
-     * @return
      */
-    public List<HistoryList> getHistory(int ps){
+    public List<HistoryList> getHistory(int ps) {
 
         String params = "?ps=" + ps + "&type=archive";
         String s = requestUtil.get("https://api.bilibili.com/x/web-interface/history/cursor" + params);
-        if (StringUtils.isEmpty(s)){
+        if (StringUtils.isEmpty(s)) {
             throw new RuntimeException("响应为空！");
         }
-        RespnseEntity respnseEntity =null;
+        RespnseEntity respnseEntity = null;
         try {
             respnseEntity = objectMapper.readValue(s, RespnseEntity.class);
         } catch (JsonProcessingException e) {
             log.info("json转换失败");
         }
+
+        // 通用
 
         return respnseEntity.getData().getList();
     }
@@ -62,6 +65,7 @@ public class NewDailyTask implements Task {
 
     /**
      * 模拟观看视频
+     *
      * @param aid
      * @param cid
      * @param progres
@@ -76,7 +80,7 @@ public class NewDailyTask implements Task {
 
         RespnseEntity respnseEntity = null;
         try {
-            respnseEntity= objectMapper.readValue(post,RespnseEntity.class);
+            respnseEntity = objectMapper.readValue(post, RespnseEntity.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -86,13 +90,35 @@ public class NewDailyTask implements Task {
     }
 
 
+    /**
+     * 分享指定的视频
+     *
+     * @param aid 视频的aid
+     * @return JSONObject
+     * @author srcrs
+     * @Time 2020-10-13
+     */
+    public SimpleResponseEntity share(String aid) {
+        String body = "aid=" + aid + "&csrf=" + data.getBili_jct();
+        String post = requestUtil.post("https://api.bilibili.com/x/web-interface/share/add", body);
+        SimpleResponseEntity respnseEntity = null;
+        try {
+            respnseEntity = objectMapper.readValue(post, SimpleResponseEntity.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return respnseEntity;
+    }
+
     @Override
     public void run() {
-        List<HistoryList> history = getHistory(6);
-        HistoryList historyList = history.get(5);
+        List<HistoryList> dataList = getHistory(6);
+        HistoryList historyList = dataList.get(1);
         report(historyList.getHistory().getOid(),
                 historyList.getHistory().getCid(),"300");
 
+        SimpleResponseEntity share = share(historyList.getHistory().getOid());
 
     }
 }
