@@ -3,6 +3,7 @@ import cn.tyl.bilitask.entity.Data;
 import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.schedule.TaskSchedule;
 import cn.tyl.bilitask.task.DailyTask;
+import cn.tyl.bilitask.task.impl.NewDailyTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class TestData {
     @Autowired
     DailyTask dailyTask;
 
+    @Autowired
+    NewDailyTask newDailyTask;
+
 
     @Test
     public void testAutowired() {
@@ -45,9 +49,10 @@ public class TestData {
 
     @Test
     public void testDailytask(){
-        List<HistoryList> history = dailyTask.getHistory(10);
-        history.forEach(System.out::println);
 
+
+        newDailyTask.run();
+//        dailyTask.run();
     }
 
 

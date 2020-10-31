@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class HistoryEntity {
 
-    private long oid;
+    private String oid;
     private int epid;
     private String bvid;
     private int page;
-    private long cid;
+    private String cid;
     private String part;
     private String business;
     private int dt;
