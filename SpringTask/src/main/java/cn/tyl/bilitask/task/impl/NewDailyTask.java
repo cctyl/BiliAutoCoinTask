@@ -94,9 +94,9 @@ public class NewDailyTask implements Task {
      * 分享指定的视频
      *
      * @param aid 视频的aid
-     * @return JSONObject
-     * @author srcrs
-     * @Time 2020-10-13
+     * @return SimpleResponseEntity
+     * @author tyl
+     * @Time 2020-10-31
      */
     public SimpleResponseEntity share(String aid) {
         String body = "aid=" + aid + "&csrf=" + data.getBili_jct();
@@ -115,10 +115,13 @@ public class NewDailyTask implements Task {
     public void run() {
         List<HistoryList> dataList = getHistory(6);
         HistoryList historyList = dataList.get(1);
-        report(historyList.getHistory().getOid(),
-                historyList.getHistory().getCid(),"300");
+        RespnseEntity report = report(historyList.getHistory().getOid(),
+                historyList.getHistory().getCid(), "300");
+        log.info("模拟观看视频 -- {}", "0".equals(report.getCode()) ? "成功" : "失败");
+
 
         SimpleResponseEntity share = share(historyList.getHistory().getOid());
+        log.info("分享视频 -- {}", "0".equals(share.getCode()) ? "成功" : "失败");
 
     }
 }
