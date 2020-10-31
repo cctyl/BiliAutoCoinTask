@@ -1,12 +1,20 @@
 package cn.tyl.bilitask.task;
 
 import cn.tyl.bilitask.entity.Data;
+import cn.tyl.bilitask.entity.response.RespnseEntity;
+import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.utils.Request;
+import cn.tyl.bilitask.utils.RequestUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 
 /**
@@ -27,6 +35,13 @@ public class DailyTask {
 
     @Autowired
     Request request;
+
+    @Autowired
+    RequestUtil requestUtil;
+
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     public void run() {
         try {
@@ -62,11 +77,21 @@ public class DailyTask {
      * @Time 2020-10-31
      * @return
      */
-    public JSONArray getHistory(String ps){
+    public List<HistoryList> getHistory(int ps){
 
         String params = "?ps=" + ps + "&type=archive";
-        JSONObject cursorObject = request.get("api.bilibili.com/x/web-interface/history/cursor"+params);
-        return null;
+        String s = requestUtil.get("https://api.bilibili.com/x/web-interface/history/cursor" + params);
+        if (StringUtils.isEmpty(s)){
+            throw new RuntimeException("响应为空！");
+        }
+        RespnseEntity respnseEntity =null;
+        try {
+            respnseEntity = objectMapper.readValue(s, RespnseEntity.class);
+        } catch (JsonProcessingException e) {
+           log.info("json转换失败");
+        }
+
+        return respnseEntity.getData().getList();
     }
 
     /**

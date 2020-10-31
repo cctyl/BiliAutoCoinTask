@@ -1,5 +1,6 @@
 import cn.tyl.bilitask.BiliTaskApplication;
 import cn.tyl.bilitask.entity.Data;
+import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.schedule.TaskSchedule;
 import cn.tyl.bilitask.task.DailyTask;
 import org.junit.Test;
@@ -7,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 /**
  * 测试类，测试自动从配置文件读取数据是否成功
@@ -42,7 +45,11 @@ public class TestData {
 
     @Test
     public void testDailytask(){
-        dailyTask.run();
+        List<HistoryList> history = dailyTask.getHistory(10);
+        history.forEach(System.out::println);
 
     }
+
+
+
 }

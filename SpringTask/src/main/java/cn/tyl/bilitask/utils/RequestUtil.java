@@ -7,6 +7,8 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class RequetsUtil {
+public class RequestUtil {
 
     @Autowired
     private Data data;
@@ -48,10 +50,46 @@ public class RequetsUtil {
             }
             respContent = EntityUtils.toString(entity, "UTF-8");
         } catch (Exception e) {
-            log.info("get请求错误 -- " + e);
+           e.printStackTrace();
         } finally {
             return respContent;
         }
     }
 
+
+    /**
+     * 发起post请求，只适用于json接口
+     * @param url 路径
+     * @param body 请求体
+     * @return
+     */
+    public String post(String url, String body) {
+        StringEntity entityBody = new StringEntity(body, "UTF-8");
+        HttpClient client = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader("connection", "keep-alive");
+        httpPost.addHeader("referer", "https://www.bilibili.com/");
+        httpPost.addHeader("accept", "application/json, text/plain, */*");
+        httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        httpPost.addHeader("charset", "UTF-8");
+        httpPost.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
+        httpPost.addHeader("Cookie", data.getCookie());
+        httpPost.setEntity(entityBody);
+        HttpResponse resp = null;
+        String respContent = null;
+        try {
+            resp = client.execute(httpPost);
+            HttpEntity entity = null;
+            if (resp.getStatusLine().getStatusCode() < 400) {
+                entity = resp.getEntity();
+            } else {
+                entity = resp.getEntity();
+            }
+            respContent = EntityUtils.toString(entity, "UTF-8");
+        } catch (Exception e) {
+            log.info("post请求错误 -- " + e);
+        } finally {
+            return respContent;
+        }
+    }
 }
