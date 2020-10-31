@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 /**
  * 封装的网络请求请求工具类
  *
- * @author srcrs
- * @Time 2020-10-13
+ * @author tyl
+ * @Time 2020-10-30
  */
 @Slf4j
 @Component
@@ -35,7 +35,7 @@ public class Request {
      *
      * @param url 请求的地址，包括参数
      * @return JSONObject
-     * @author srcrs
+     * @author tyl
      * @Time 2020-10-13
      */
     public JSONObject get(String url) {
@@ -69,7 +69,7 @@ public class Request {
      * @param url  请求的地址
      * @param body 携带的参数
      * @return JSONObject
-     * @author srcrs
+     * @author tyl
      * @Time 2020-10-13
      */
     public JSONObject post(String url, String body) {

@@ -15,3 +15,11 @@ Selenium方式（旧项目）：
 
 
 
+SpringTask:
+
+​	对原项目https://github.com/srcrs/BilibiliTask 的改写。
+
+* 大体框架使用SpringBoot
+* 修改了对配置文件的读写
+* 修改了数据的获取来源
+* 修改定时任务的执行方式

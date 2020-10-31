@@ -1,6 +1,7 @@
 import cn.tyl.bilitask.BiliTaskApplication;
 import cn.tyl.bilitask.entity.Data;
 import cn.tyl.bilitask.schedule.TaskSchedule;
+import cn.tyl.bilitask.task.DailyTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class TestData {
     private TaskSchedule taskSchedule;
 
 
+    @Autowired
+    DailyTask dailyTask;
+
 
     @Test
     public void testAutowired() {
@@ -33,5 +37,12 @@ public class TestData {
     public  void testCheck(){
 
         System.out.println(taskSchedule.check());
+    }
+
+
+    @Test
+    public void testDailytask(){
+        dailyTask.run();
+
     }
 }
