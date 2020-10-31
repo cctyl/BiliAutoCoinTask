@@ -6,6 +6,7 @@ import cn.tyl.bilitask.entity.response.SimpleResponseEntity;
 import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.task.Task;
 import cn.tyl.bilitask.utils.RequestUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -111,17 +113,38 @@ public class NewDailyTask implements Task {
         return respnseEntity;
     }
 
+
+    /**
+     * 获取剩余硬币数
+     * @return
+     */
+    public Double getCoin() {
+        String get = requestUtil.get("https://api.bilibili.com/x/web-interface/nav?build=0&mobi_app=web");
+        SimpleResponseEntity simpleResponseEntity = null;
+        Double money =0.0;
+        try {
+            simpleResponseEntity = objectMapper.readValue(get, SimpleResponseEntity.class);
+            LinkedHashMap data = (LinkedHashMap) simpleResponseEntity.getData();
+            money = (Double)data.get("money");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return money;
+    }
+
+
     @Override
     public void run() {
         List<HistoryList> dataList = getHistory(6);
-        HistoryList historyList = dataList.get(1);
+        HistoryList historyList = dataList.get(2);
         RespnseEntity report = report(historyList.getHistory().getOid(),
                 historyList.getHistory().getCid(), "300");
-        log.info("模拟观看视频 -- {}", "0".equals(report.getCode()) ? "成功" : "失败");
+        log.info("模拟观看视频 -- {}", "0".equals(report.getCode() + "") ? "成功" : "失败");
 
 
         SimpleResponseEntity share = share(historyList.getHistory().getOid());
-        log.info("分享视频 -- {}", "0".equals(share.getCode()) ? "成功" : "失败");
+        log.info("分享视频 -- {}", "0".equals(share.getCode() + "") ? "成功" : "失败");
 
     }
 }

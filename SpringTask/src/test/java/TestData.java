@@ -51,7 +51,7 @@ public class TestData {
     public void testDailytask(){
 
 
-        newDailyTask.run();
+        System.out.println(newDailyTask.getCoin());
 //        dailyTask.run();
     }
 

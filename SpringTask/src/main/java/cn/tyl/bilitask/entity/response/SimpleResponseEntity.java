@@ -11,5 +11,5 @@ public class SimpleResponseEntity {
     private int code;
     private String message;
     private int ttl;
-    private int data;
+    private Object data;
 }
