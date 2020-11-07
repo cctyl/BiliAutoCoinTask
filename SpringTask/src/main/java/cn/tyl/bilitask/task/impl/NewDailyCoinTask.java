@@ -26,11 +26,18 @@ public class NewDailyCoinTask implements Task {
     @Override
     public void run() {
         //0.还剩下多少硬币
-
+        int myCoin = getCoin();
+        if (myCoin<1){
+            log.info("没硬币了，今日不投币");
+        }
         //1.今天获得了多少投币经验
         Integer reward = getReward();
         //2.今天还需要投多少个硬币
-        Integer remainCoin = (50-reward)/10;
+        Integer remainCoin = (50 - reward) / 10;
+
+        //2.1硬币还足够投吗？ 实际投币数
+        Integer actualCoin = (myCoin>remainCoin?remainCoin:myCoin);
+
         //3.今天要给哪些视频投币
 
         //4.执行投币任务
@@ -41,6 +48,9 @@ public class NewDailyCoinTask implements Task {
 
     /**
      * 获取已投币数
+     *
+     * @Auth tyl
+     * @Date 2020-11-7
      * @return
      */
     public Integer getReward() {
@@ -49,34 +59,31 @@ public class NewDailyCoinTask implements Task {
         try {
             jsonNode = objectMapper.readTree(get);
         } catch (JsonProcessingException e) {
-            log.error("json转换异常，检查getReward（）方法-----"+e.getMessage());
+            log.error("json转换异常，检查getReward（）方法-----" + e.getMessage());
         }
         String coinString = jsonNode.get("data").get("coins_av").toPrettyString();
-
         return Integer.parseInt(coinString);
     }
 
 
-
     /**
      * 获取剩余硬币数
+     * 默认向下取整，去除小数
+     *
+     * @return
      * @Auth tyl
      * @Date 2020-11-7
-     * @return
      */
-    public Double getCoin() {
-
-
-
+    public int getCoin() {
         String get = requestUtil.get("https://api.bilibili.com/x/web-interface/nav?build=0&mobi_app=web");
         JsonNode root = null;
         try {
             root = objectMapper.readTree(get);
         } catch (JsonProcessingException e) {
-            log.error("json转换异常，检查getCoin方法-----"+e.getMessage());
+            log.error("json转换异常，检查getCoin方法-----" + e.getMessage());
         }
         String lastCoin = root.get("data").get("money").toPrettyString();
 
-        return Double.parseDouble(lastCoin);
+        return (int)Double.parseDouble(lastCoin);
     }
 }

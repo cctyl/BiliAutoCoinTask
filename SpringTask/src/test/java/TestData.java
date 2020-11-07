@@ -3,6 +3,7 @@ import cn.tyl.bilitask.entity.Data;
 
 import cn.tyl.bilitask.schedule.TaskSchedule;
 
+import cn.tyl.bilitask.task.impl.NewDailyCoinTask;
 import cn.tyl.bilitask.task.impl.NewDailyTask;
 import cn.tyl.bilitask.utils.RequestUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,7 +34,7 @@ public class TestData {
     RequestUtil requestUtil;
 
     @Autowired
-    NewDailyTask newDailyTask;
+    NewDailyCoinTask dailyCoinTask;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -53,20 +54,20 @@ public class TestData {
         System.out.println(taskSchedule.check());
     }
 
-
+*/
     @Test
     public void testDailytask(){
 
 
-        System.out.println(newDailyTask.getCoin());
-//        dailyTask.run();
+        int coin = dailyCoinTask.getCoin();
+        Integer reward = dailyCoinTask.getReward();
     }
-*/
 
 
-    /**
+
+  /*  *//**
      * 测试json的解析
-     */
+     *//*
     @Test
     public void testJsonParse() throws JsonProcessingException {
         String get = "{\n" +
@@ -93,7 +94,7 @@ public class TestData {
         JsonNode temp = jsonNode.get("data").get("coins_av");
         String s = temp.toPrettyString();
 
-    }
+    }*/
 
 
 
