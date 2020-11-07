@@ -114,25 +114,7 @@ public class NewDailyTask implements Task {
     }
 
 
-    /**
-     * 获取剩余硬币数
-     *
-     * @return
-     */
-    public Double getCoin() {
-        String get = requestUtil.get("https://api.bilibili.com/x/web-interface/nav?build=0&mobi_app=web");
-        SimpleResponseEntity simpleResponseEntity = null;
-        Double money = 0.0;
-        try {
-            simpleResponseEntity = objectMapper.readValue(get, SimpleResponseEntity.class);
-            LinkedHashMap data = (LinkedHashMap) simpleResponseEntity.getData();
-            money = (Double) data.get("money");
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
 
-        return money;
-    }
 
 
     @Override
