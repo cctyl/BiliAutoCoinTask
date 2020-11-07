@@ -1,10 +1,12 @@
 import cn.tyl.bilitask.BiliTaskApplication;
 import cn.tyl.bilitask.entity.Data;
 
+import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.schedule.TaskSchedule;
 
 import cn.tyl.bilitask.task.impl.NewDailyCoinTask;
 import cn.tyl.bilitask.task.impl.NewDailyTask;
+import cn.tyl.bilitask.utils.BiliVideoUtils;
 import cn.tyl.bilitask.utils.RequestUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,77 +27,18 @@ import java.util.List;
 public class TestData {
 
     @Autowired
-    private Data data;
-
-//    @Autowired
-//    private TaskSchedule taskSchedule;
-
-    @Autowired
-    RequestUtil requestUtil;
+    BiliVideoUtils videoUtils;
 
     @Autowired
     NewDailyCoinTask dailyCoinTask;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
-
-/*
+    /**
+     * 测试投币是否成功
+     */
     @Test
-    public void testAutowired() {
+    public void testThrowCoin() {
 
-        System.out.println(data.toString());
+        dailyCoinTask.run();
     }
-
-
-    @Test
-    public  void testCheck(){
-
-        System.out.println(taskSchedule.check());
-    }
-
-*/
-    @Test
-    public void testDailytask(){
-
-
-        int coin = dailyCoinTask.getCoin();
-        Integer reward = dailyCoinTask.getReward();
-    }
-
-
-
-  /*  *//**
-     * 测试json的解析
-     *//*
-    @Test
-    public void testJsonParse() throws JsonProcessingException {
-        String get = "{\n" +
-                "  \"code\": 0,\n" +
-                "  \"status\": true,\n" +
-                "  \"data\": {\n" +
-                "    \"login\": true,\n" +
-                "    \"watch_av\": true,\n" +
-                "    \"coins_av\": 0,\n" +
-                "    \"share_av\": false,\n" +
-                "    \"email\": true,\n" +
-                "    \"tel\": true,\n" +
-                "    \"safequestion\": false,\n" +
-                "    \"identify_card\": true,\n" +
-                "    \"level_info\": {\n" +
-                "      \"current_level\": 5,\n" +
-                "      \"current_min\": 10800,\n" +
-                "      \"current_exp\": 28275,\n" +
-                "      \"next_exp\": 28800\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
-        JsonNode jsonNode = objectMapper.readTree(get);
-        JsonNode temp = jsonNode.get("data").get("coins_av");
-        String s = temp.toPrettyString();
-
-    }*/
-
-
 
 }

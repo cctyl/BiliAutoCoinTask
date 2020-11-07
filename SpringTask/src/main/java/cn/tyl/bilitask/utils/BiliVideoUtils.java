@@ -4,7 +4,9 @@ import cn.tyl.bilitask.entity.Data;
 import cn.tyl.bilitask.entity.response.RespnseEntity;
 import cn.tyl.bilitask.entity.response.SimpleResponseEntity;
 import cn.tyl.bilitask.entity.response.history.HistoryList;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,5 +105,85 @@ public class BiliVideoUtils {
         }
 
         return respnseEntity;
+    }
+
+
+    /**
+     * 获取已投币数
+     *
+     * @Auth tyl
+     * @Date 2020-11-7
+     * @return
+     */
+    public Integer getReward() {
+        String get = requestUtil.get("https://account.bilibili.com/home/reward");
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = objectMapper.readTree(get);
+        } catch (JsonProcessingException e) {
+            log.error("json转换异常，检查getReward（）方法-----" + e.getMessage());
+        }
+        String coinString = jsonNode.get("data").get("coins_av").toPrettyString();
+        return Integer.parseInt(coinString);
+    }
+
+
+    /**
+     * 获取剩余硬币数
+     * 默认向下取整，去除小数
+     *
+     * @return
+     * @Auth tyl
+     * @Date 2020-11-7
+     */
+    public int getCoin() {
+        String get = requestUtil.get("https://api.bilibili.com/x/web-interface/nav?build=0&mobi_app=web");
+        JsonNode root = null;
+        try {
+            root = objectMapper.readTree(get);
+        } catch (JsonProcessingException e) {
+            log.error("json转换异常，检查getCoin方法-----" + e.getMessage());
+        }
+        String lastCoin = root.get("data").get("money").toPrettyString();
+
+        return (int)Double.parseDouble(lastCoin);
+    }
+
+
+
+    /**
+     * 给视频投币
+     *
+     * @param aid         视频 aid 号
+     * @param num         投币数量
+     * @param select_like 是否点赞
+     * @return 投币结果
+     * @author tyl
+     * @Time 2020-11-7
+     */
+    public boolean throwCoin(String aid, String num, String select_like) {
+
+        String body = "aid=" + aid
+                + "&multiply=" + num
+                + "&select_like=" + select_like
+                + "&cross_domain=" + "true"
+                + "&csrf=" + data.getBili_jct();
+        String post = requestUtil.post("https://api.bilibili.com/x/web-interface/coin/add", body);
+        JsonNode root = null;
+        try {
+            root = objectMapper.readTree(post);
+        } catch (JsonProcessingException e) {
+            log.error("json转换异常，检查getCoin方法-----" + e.getMessage());
+        }
+        String code = root.get("code").toPrettyString();
+        String message = root.get("message").toPrettyString();
+        if (code.equals("0")){
+            return true;
+        }else {
+
+            log.error("aid："+aid+" 投币失败,message:"+message);
+            return false;
+        }
+
     }
 }
