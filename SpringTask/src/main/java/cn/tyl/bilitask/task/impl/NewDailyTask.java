@@ -116,16 +116,17 @@ public class NewDailyTask implements Task {
 
     /**
      * 获取剩余硬币数
+     *
      * @return
      */
     public Double getCoin() {
         String get = requestUtil.get("https://api.bilibili.com/x/web-interface/nav?build=0&mobi_app=web");
         SimpleResponseEntity simpleResponseEntity = null;
-        Double money =0.0;
+        Double money = 0.0;
         try {
             simpleResponseEntity = objectMapper.readValue(get, SimpleResponseEntity.class);
             LinkedHashMap data = (LinkedHashMap) simpleResponseEntity.getData();
-            money = (Double)data.get("money");
+            money = (Double) data.get("money");
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -136,13 +137,18 @@ public class NewDailyTask implements Task {
 
     @Override
     public void run() {
+        //获取历史观看视频
         List<HistoryList> dataList = getHistory(6);
+
+        //拿到其中一个视频
         HistoryList historyList = dataList.get(2);
+
+        //对这个视频进行观看
         RespnseEntity report = report(historyList.getHistory().getOid(),
                 historyList.getHistory().getCid(), "300");
         log.info("模拟观看视频 -- {}", "0".equals(report.getCode() + "") ? "成功" : "失败");
 
-
+        //对这个视频进行分享
         SimpleResponseEntity share = share(historyList.getHistory().getOid());
         log.info("分享视频 -- {}", "0".equals(share.getCode() + "") ? "成功" : "失败");
 

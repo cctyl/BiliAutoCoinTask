@@ -42,7 +42,7 @@ public class RequestUtil {
         String respContent = null;
         try {
             resp = client.execute(httpGet);
-            HttpEntity entity = null;
+            HttpEntity entity ;
             if (resp.getStatusLine().getStatusCode() < 400) {
                 entity = resp.getEntity();
             } else {
