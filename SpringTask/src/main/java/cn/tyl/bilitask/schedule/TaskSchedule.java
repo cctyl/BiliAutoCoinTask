@@ -8,6 +8,7 @@ import cn.tyl.bilitask.utils.BiliVideoUtils;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -28,6 +29,24 @@ public class TaskSchedule {
 
     @Autowired
     BiliVideoUtils biliVideoUtils;
+
+
+    /**
+     * 启动任务
+     * 每天早上6点01分01秒执行一次
+     */
+    @Scheduled(cron = "1 01 6 * * *")
+    public void run(){
+
+        //1.投币
+        throwCoinTask();
+
+        //2.模拟观看视频，分享
+        viewAndShareTask();
+
+
+
+    }
 
 
     /**
