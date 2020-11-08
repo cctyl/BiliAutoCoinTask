@@ -5,6 +5,7 @@ import cn.tyl.bilitask.schedule.TaskSchedule;
 import cn.tyl.bilitask.utils.BiliLiveUtils;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,8 +39,7 @@ public class TestData {
      */
     @Test
     public void test() {
-        System.out.println(biliLiveUtils.xliveGetRecommend());
-
+        JsonNode liveGiftBagList = biliLiveUtils.getLiveGiftBagList();
 
 
     }
