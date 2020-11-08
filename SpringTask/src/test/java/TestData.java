@@ -38,7 +38,7 @@ public class TestData {
      */
     @Test
     public void test() {
-        System.out.println(biliLiveUtils.getSilver());
+       biliLiveUtils.silver2coin();
 
 
     }

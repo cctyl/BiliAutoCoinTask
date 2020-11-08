@@ -1,6 +1,6 @@
 package cn.tyl.bilitask.utils;
 
-import com.alibaba.fastjson.JSONObject;
+import cn.tyl.bilitask.entity.Data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +19,9 @@ public class BiliLiveUtils {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Autowired
+    Data data;
 
     /**
      * 进行直播签到
@@ -69,5 +72,35 @@ public class BiliLiveUtils {
         int sliver = Integer.parseInt(root.get("data").get("silver").toPrettyString());
         return sliver;
     }
+
+
+
+    /**
+     * 银瓜子兑换成硬币
+     * @return
+     * @author tyl
+     * @Time 2020-11-8
+     */
+    public void silver2coin(){
+        String body = "csrf_token="+data.getBili_jct();
+        String post = requestUtil.post("https://api.live.bilibili.com/pay/v1/Exchange/silver2coin", body);
+        JsonNode root = null;
+        try {
+            root = objectMapper.readTree(post);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String msg = root.get("msg").toPrettyString();
+        if (msg.contains("成功")){
+            log.info("兑换成功，银瓜子-700，硬币+1");
+
+        }else {
+            log.info(msg);
+        }
+
+
+
+    }
+
 
 }

@@ -155,6 +155,21 @@ public class TaskSchedule {
     }
 
 
+    /**
+     * 将银瓜子转换成硬币，每天只能转换一个硬币
+     */
+    public void sliverToCoin(){
+
+        //获取剩余银瓜子数
+        Integer silver = biliLiveUtils.getSilver();
+        if (silver<700){
+            log.info("银瓜子数量小于700，不兑换");
+            return;
+        }
+
+        biliLiveUtils.silver2coin();
+    }
+
 
 
 }
