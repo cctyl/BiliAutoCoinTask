@@ -1,8 +1,10 @@
 import cn.tyl.bilitask.BiliTaskApplication;
 
+import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.schedule.TaskSchedule;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {BiliTaskApplication.class})
+@Slf4j
 public class TestData {
 
     @Autowired
@@ -32,8 +35,14 @@ public class TestData {
     @Test
     public void testThrowCoin() {
 
-        taskSchedule.throwCoinTask();
-        taskSchedule.viewAndShareTask();
+        int coin = videoUtils.getCoin();
+        Integer reward = videoUtils.getReward();
+        List<HistoryList> history = videoUtils.getHistory(5);
+
+        log.info(coin+"");
+        log.info(reward+"");
+        log.info(history.toString());
+
 
     }
 
