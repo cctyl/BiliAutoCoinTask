@@ -3,59 +3,10 @@
   "message": "0",
   "ttl": 1,
   "data": {
-    "isLogin": true,
-    "email_verified": 1,
-    "face": "http://i2.hdslb.com/bfs/face/13703d9b4b25e46a06f8928cd2cced5c315638a7.jpg",
-    "level_info": {
-      "current_level": 5,
-      "current_min": 10800,
-      "current_exp": 28285,
-      "next_exp": 28800
-    },
-    "mid": 8427106,
-    "mobile_verified": 1,
-    "money": 46.4,
-    "moral": 70,
-    "official": {
-      "role": 0,
-      "title": "",
-      "desc": "",
-      "type": -1
-    },
-    "officialVerify": {
-      "type": -1,
-      "desc": ""
-    },
-    "pendant": {
-      "pid": 0,
-      "name": "",
-      "image": "",
-      "expire": 0,
-      "image_enhance": ""
-    },
-    "scores": 0,
-    "uname": "让生活更好",
-    "vipDueDate": 1602345600000,
-    "vipStatus": 0,
-    "vipType": 1,
-    "vip_pay_type": 0,
-    "vip_theme_type": 0,
-    "vip_label": {
-      "path": "",
-      "text": "",
-      "label_theme": ""
-    },
-    "vip_avatar_subscript": 0,
-    "vip_nickname_color": "",
-    "wallet": {
-      "mid": 8427106,
-      "bcoin_balance": 0,
-      "coupon_balance": 0,
-      "coupon_due_time": 0
-    },
-    "has_shop": false,
-    "shop_url": "",
-    "allowance_count": 0,
-    "answer_status": 0
+    "text": "3000点用户经验,2根辣条",
+    "specialText": "再签到4天可以获得666银瓜子",
+    "allDays": 30,
+    "hadSignDays": 1,
+    "isBonusDay": 0
   }
 }
