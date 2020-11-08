@@ -103,4 +103,25 @@ public class BiliLiveUtils {
     }
 
 
+
+    /**
+     * 获取一个直播间的room_id
+     * @return JSONObject
+     * @author srcrs
+     * @Time 2020-10-13
+     */
+    public String xliveGetRecommend(){
+        String get = requestUtil.get("https://api.live.bilibili.com/relation/v1/AppWeb/getRecommendList");
+        JsonNode root = null;
+        try {
+            root = objectMapper.readTree(get);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String roomid = root.get("data").get("list").get(6).get("roomid").toPrettyString();
+        return roomid;
+
+    }
+
+
 }

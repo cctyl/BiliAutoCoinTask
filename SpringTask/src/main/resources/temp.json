@@ -1,12 +1,80 @@
 {
   "code": 0,
-  "message": "0",
-  "ttl": 1,
+  "msg": "success",
+  "message": "success",
   "data": {
-    "text": "3000点用户经验,2根辣条",
-    "specialText": "再签到4天可以获得666银瓜子",
-    "allDays": 30,
-    "hadSignDays": 1,
-    "isBonusDay": 0
+    "list": [
+      {
+        "roomname": "【B限】突击直播　古守唄",
+        "nickname": "古守血遊official",
+        "face": "https://i1.hdslb.com/bfs/face/a7edad60dab7f5bf46b4ce6460e9ff988acbc68e.jpg",
+        "roomid": 8725120,
+        "link": "https://live.bilibili.com/8725120"
+      },
+      {
+        "roomname": "玩",
+        "nickname": "花少北丶",
+        "face": "https://i1.hdslb.com/bfs/face/86ef6895a8f88c80f2885e7eb9ba7989db437b93.jpg",
+        "roomid": 81711,
+        "link": "https://live.bilibili.com/81711"
+      },
+      {
+        "roomname": "【豆腐】第五分区决赛冲！！！！！！！",
+        "nickname": "老骚豆腐",
+        "face": "https://i2.hdslb.com/bfs/face/3fbe96b622fb05fa479d769b847593869f0dc96c.jpg",
+        "roomid": 763679,
+        "link": "https://live.bilibili.com/763679"
+      },
+      {
+        "roomname": "派蒙声优带你探索前面的区域~",
+        "nickname": "多多poi丶",
+        "face": "https://i1.hdslb.com/bfs/face/743617a9456bbc5b1b88c7358df38b75a484974d.jpg",
+        "roomid": 392523,
+        "link": "https://live.bilibili.com/392523"
+      },
+      {
+        "roomname": "新英雄澜王者分区决赛啦0.0",
+        "nickname": "棉花大哥哥",
+        "face": "https://i0.hdslb.com/bfs/face/66d337c6eb0c069e5ff18eba9d085b841c535333.jpg",
+        "roomid": 34348,
+        "link": "https://live.bilibili.com/34348"
+      },
+      {
+        "roomname": "我是带明星！",
+        "nickname": "某幻君",
+        "face": "https://i2.hdslb.com/bfs/face/ede5e9251614c89c5c19a163a9bfde9a3913e115.jpg",
+        "roomid": 271744,
+        "link": "https://live.bilibili.com/271744"
+      },
+      {
+        "roomname": "和大家的第一个生日！",
+        "nickname": "筱魈Channel",
+        "face": "https://i2.hdslb.com/bfs/face/6c34f65428770b574a576472458d2ae0c949163e.jpg",
+        "roomid": 2301751,
+        "link": "https://live.bilibili.com/2301751"
+      },
+      {
+        "roomname": "刘畅木法沙的直播间",
+        "nickname": "刘畅木法沙",
+        "face": "https://i1.hdslb.com/bfs/face/362974d98fcaf9b3072a786c29707067609495f9.jpg",
+        "roomid": 21979954,
+        "link": "https://live.bilibili.com/21979954"
+      },
+      {
+        "roomname": "还玩",
+        "nickname": "老番茄",
+        "face": "https://i2.hdslb.com/bfs/face/bc5ca101313d4db223c395d64779e76eb3482d60.jpg",
+        "roomid": 21852,
+        "link": "https://live.bilibili.com/21852"
+      },
+      {
+        "roomname": "【B限】歌枠‼！",
+        "nickname": "NoWorld_Official",
+        "face": "https://i1.hdslb.com/bfs/face/c9a854ef9b98c0c335482cae5c3f6ad26c5e939f.jpg",
+        "roomid": 21448649,
+        "link": "https://live.bilibili.com/21448649"
+      }
+    ],
+    "count": 10
   }
 }

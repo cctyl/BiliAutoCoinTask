@@ -38,7 +38,8 @@ public class TestData {
      */
     @Test
     public void test() {
-       biliLiveUtils.silver2coin();
+        System.out.println(biliLiveUtils.xliveGetRecommend());
+
 
 
     }

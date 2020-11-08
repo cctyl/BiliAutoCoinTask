@@ -65,8 +65,10 @@ public class TaskSchedule {
         if (myCoin < 1) {
             log.info("没硬币了，今日不投币");
         }
+
         //1.今天获得了多少投币经验
         Integer reward = biliVideoUtils.getReward();
+
         //2.今天还需要投多少个硬币
         Integer remainCoin = (50 - reward) / 10;
 
@@ -85,16 +87,20 @@ public class TaskSchedule {
                 break;
 
             }
+
             //判断投的硬币数是否达到了实际可投数
             if (throwNum >= actualCoin) {
                 //达到了停止投币
                 break;
             }
+
+            //拿到要投币的视频id
             String oid = history.get(index).getHistory().getOid();
             if (StringUtils.isEmpty(oid)) {
                 //为空抛异常
                 throw new RuntimeException("获取的视频id居然为空，赶快检查！");
             }
+
             //不为空，继续执行投币任务
             boolean result = biliVideoUtils.throwCoin(oid, "1", "1");
 
@@ -132,6 +138,7 @@ public class TaskSchedule {
         //对这个视频进行观看
         RespnseEntity report = biliVideoUtils.report(historyList.getHistory().getOid(),
                 historyList.getHistory().getCid(), "300");
+
         log.info("模拟观看视频 -- {}", "0".equals(report.getCode() + "") ? "成功" : "失败");
 
         //对这个视频进行分享
