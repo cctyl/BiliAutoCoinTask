@@ -22,7 +22,7 @@ public class BiliLiveUtils {
 
     /**
      * 进行直播签到
-     *
+     *1
      * @return
      */
     public boolean xliveSign() {
@@ -47,6 +47,27 @@ public class BiliLiveUtils {
             return false;
         }
 
+    }
+
+
+
+    /**
+     * 获取银瓜子的数量
+     * @return Integer
+     * @author tyl
+     * @Time 2020-11-8
+     */
+    public Integer getSilver(){
+
+        String get = requestUtil.get("https://api.live.bilibili.com/xlive/web-ucenter/user/get_user_info");
+        JsonNode root = null;
+        try {
+            root = objectMapper.readTree(get);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+        int sliver = Integer.parseInt(root.get("data").get("silver").toPrettyString());
+        return sliver;
     }
 
 }

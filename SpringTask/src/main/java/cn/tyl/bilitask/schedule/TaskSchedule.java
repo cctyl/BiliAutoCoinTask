@@ -4,6 +4,7 @@ import cn.tyl.bilitask.entity.Data;
 import cn.tyl.bilitask.entity.response.RespnseEntity;
 import cn.tyl.bilitask.entity.response.SimpleResponseEntity;
 import cn.tyl.bilitask.entity.response.history.HistoryList;
+import cn.tyl.bilitask.utils.BiliLiveUtils;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,9 @@ public class TaskSchedule {
     BiliVideoUtils biliVideoUtils;
 
 
+    @Autowired
+    BiliLiveUtils biliLiveUtils;
+
     /**
      * 启动任务
      * 每天早上6点01分01秒执行一次
@@ -45,6 +49,9 @@ public class TaskSchedule {
         viewAndShareTask();
 
 
+
+        //3.直播区签到
+        liveSignEveryDay();
 
     }
 
@@ -99,6 +106,12 @@ public class TaskSchedule {
                 //投币失败，跳过当前视频，投下一个视频。已投硬币数不增加
                 index++;
             }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         log.info("今日尝试投币" + index + "次，成功投出" + throwNum + "个硬币，投币失败" + (index - throwNum));
@@ -127,6 +140,19 @@ public class TaskSchedule {
 
     }
 
+
+    /**
+     * 直播区每日签到任务
+     */
+    public void liveSignEveryDay(){
+        boolean b = biliLiveUtils.xliveSign();
+        if (b){
+            log.info("签到成功");
+
+        }else {
+            log.error("签到失败");
+        }
+    }
 
 
 

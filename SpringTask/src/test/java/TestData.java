@@ -2,6 +2,7 @@ import cn.tyl.bilitask.BiliTaskApplication;
 
 import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.schedule.TaskSchedule;
+import cn.tyl.bilitask.utils.BiliLiveUtils;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,20 +29,16 @@ public class TestData {
     @Autowired
     TaskSchedule taskSchedule;
 
+    @Autowired
+    BiliLiveUtils biliLiveUtils;
+
 
     /**
      * 测试投币是否成功
      */
     @Test
-    public void testThrowCoin() {
-
-        int coin = videoUtils.getCoin();
-        Integer reward = videoUtils.getReward();
-        List<HistoryList> history = videoUtils.getHistory(5);
-
-        log.info(coin+"");
-        log.info(reward+"");
-        log.info(history.toString());
+    public void test() {
+        System.out.println(biliLiveUtils.getSilver());
 
 
     }
