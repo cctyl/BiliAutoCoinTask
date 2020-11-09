@@ -2,6 +2,7 @@ package cn.tyl.bilitask.utils;
 
 import cn.tyl.bilitask.entity.Data;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -169,5 +170,48 @@ public class BiliLiveUtils {
         JsonNode jsonNode = root.get("data").get("list");
         return jsonNode;
     }
+
+
+    /**
+     * B站直播送出背包的礼物
+     *
+     * @param biz_id        roomId
+     * @param ruid          uid 用户id
+     * @param bag_id        背包id
+     * @param gift_id       礼物id
+     * @param gift_num      礼物数量
+     * @param storm_beat_id
+     * @param price
+     * @param platform      设备标识
+     * @return JsonNode
+     * @author tyl
+     * @Time 2020-11-9
+     */
+    public JsonNode sendLiveGift(String biz_id, String ruid,
+                                   String bag_id, String gift_id,
+                                   String gift_num, String storm_beat_id,
+                                   String price, String platform) {
+        String body = "uid=" + data.getMid()
+                + "&gift_id=" + gift_id
+                + "&ruid=" + ruid
+                + "&send_ruid=0"
+                + "&gift_num=" + gift_num
+                + "&bag_id=" + bag_id
+                + "&platform=" + platform
+                + "&biz_code=" + "live"
+                + "&biz_id=" + biz_id
+                + "&storm_beat_id=" + storm_beat_id
+                + "&price=" + price
+                + "&csrf=" + data.getBili_jct();
+        String post = requestUtil.post("https://api.live.bilibili.com/gift/v2/live/bag_send", body);
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = objectMapper.readTree(post);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+        return jsonNode;
+    }
+
 
 }

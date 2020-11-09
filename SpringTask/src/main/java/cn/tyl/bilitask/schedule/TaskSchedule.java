@@ -7,7 +7,9 @@ import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.utils.BiliLiveUtils;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 import cn.tyl.bilitask.utils.MessageUtils;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -62,10 +64,71 @@ public class TaskSchedule {
 
         //99.发送消息，表明今日任务执行完毕 分隔符
 
-        String total = s1+"\n"+s2+"\n"+s3+"\n"+s4;
+        String total = s1 + "\n" + s2 + "\n" + s3 + "\n" + s4;
         String today = LocalDate.now().toString();
 
-        messageUtils.sendMessage(today+"【任务执行情况报告】",total);
+        messageUtils.sendMessage(today + "【任务执行情况报告】", total);
+    }
+
+
+    /**
+     * 随机抽一个直播间送出礼物
+     * @return
+     */
+    public String giveGift() {
+
+        String taskMessage = "";
+        //获取一个直播间的room_id
+        String roomId = biliLiveUtils.getliveRecommend();
+        //通过room_id获取uid
+        String uid = biliLiveUtils.getRoomUid(roomId);
+        // B站后台时间戳为10位
+        long nowTime = System.currentTimeMillis() / 1000;
+        //获得礼物列表
+        JsonNode liveGiftBagList = biliLiveUtils.getLiveGiftBagList();
+
+        //送出状态的标记
+        boolean sendFlag = false;
+        int count = 0;
+        for (JsonNode node : liveGiftBagList) {
+
+            long expireAt = Long.valueOf(node.get("expire_at").toPrettyString());
+            // 礼物还剩1天送出,其余保留
+            // 永久礼物到期时间为0
+            if ((expireAt - nowTime) < 87000 && expireAt != 0) {
+
+                //开始赠送礼物
+                JsonNode result = biliLiveUtils.sendLiveGift(roomId, uid, node.get("bag_id").toPrettyString(),
+                        node.get("gift_id").toPrettyString(), node.get("gift_num").toPrettyString(), "0", "0", "pc");
+
+                //判断礼物送出结果
+                if ("0".equals(result.get("code").toPrettyString())) {
+                    //送出成功
+                    //礼物的名字
+                    String giftName = result.get("data").get("gift_name").toPrettyString();
+                    //礼物的数量
+                    String giftNum = result.get("data").get("gift_num").toPrettyString();
+                    log.info("送礼物给{} {} 数量: {}", roomId, giftName, giftNum);
+
+                    //标记本轮送出状态
+                    sendFlag = true;
+                    count++;
+                } else {
+                    //送出失败
+                    log.error("礼物送出失败 -- " + result.toPrettyString());
+                }
+            }
+        }
+
+        if (sendFlag){
+
+            taskMessage +="成功送出礼物，送出"+count+"次";
+        }else {
+            taskMessage+="没有礼物即将到期，所以本次没有送出礼物";
+        }
+
+        return taskMessage;
+
     }
 
 
