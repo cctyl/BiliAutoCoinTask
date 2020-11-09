@@ -5,6 +5,7 @@ import cn.tyl.bilitask.schedule.TaskSchedule;
 import cn.tyl.bilitask.utils.BiliLiveUtils;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 
+import cn.tyl.bilitask.utils.MessageUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -34,14 +35,21 @@ public class TestData {
     BiliLiveUtils biliLiveUtils;
 
 
+    @Autowired
+    MessageUtils messageUtils;
     /**
      * 测试投币是否成功
      */
     @Test
     public void test() {
-        JsonNode liveGiftBagList = biliLiveUtils.getLiveGiftBagList();
+       /* JsonNode liveGiftBagList = biliLiveUtils.getLiveGiftBagList();
 
+        for (JsonNode jsonNode : liveGiftBagList) {
+            String expire_at = jsonNode.get("expire_at").toPrettyString();
+            System.out.println(expire_at);
+        }*/
 
+        messageUtils.sendMessage("第er次发送信息","111111111");
     }
 
 }

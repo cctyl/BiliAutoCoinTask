@@ -28,6 +28,7 @@ public class RequestUtil {
     /**
      * 发起get请求，返回json数据。
      * 只适用于json接口
+     *
      * @param url
      * @return
      */
@@ -42,7 +43,7 @@ public class RequestUtil {
         String respContent = null;
         try {
             resp = client.execute(httpGet);
-            HttpEntity entity ;
+            HttpEntity entity;
             if (resp.getStatusLine().getStatusCode() < 400) {
                 entity = resp.getEntity();
             } else {
@@ -50,7 +51,7 @@ public class RequestUtil {
             }
             respContent = EntityUtils.toString(entity, "UTF-8");
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         } finally {
             return respContent;
         }
@@ -59,7 +60,8 @@ public class RequestUtil {
 
     /**
      * 发起post请求，只适用于json接口
-     * @param url 路径
+     *
+     * @param url  路径
      * @param body 请求体
      * @return
      */

@@ -1,38 +1,5 @@
 {
-  "code": 0,
-  "message": "0",
-  "ttl": 1,
-  "data": {
-    "list": [
-      {
-        "bag_id": 223445167,
-        "gift_id": 1,
-        "gift_name": "辣条",
-        "gift_num": 12,
-        "gift_type": 5,
-        "expire_at": 1604851200,
-        "corner_mark": "1天",
-        "corner_color": "",
-        "count_map": [
-          {
-            "num": 1,
-            "text": ""
-          },
-          {
-            "num": 12,
-            "text": "全部"
-          }
-        ],
-        "bind_roomid": 0,
-        "bind_room_text": "",
-        "type": 1,
-        "card_image": "",
-        "card_gif": "",
-        "card_id": 0,
-        "card_record_id": 0,
-        "is_show_send": false
-      }
-    ],
-    "time": 0
-  }
+  "errno": 0,
+  "errmsg": "success",
+  "dataset": "done"
 }
