@@ -7,8 +7,6 @@ import cn.tyl.bilitask.entity.response.history.HistoryList;
 import cn.tyl.bilitask.utils.BiliLiveUtils;
 import cn.tyl.bilitask.utils.BiliVideoUtils;
 import cn.tyl.bilitask.utils.MessageUtils;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +60,11 @@ public class TaskSchedule {
         //4.银瓜子转换硬币
         String s4 = sliverToCoin();
 
+        //5.直播间送出到期礼物
+        String s5 = giveGift();
         //99.发送消息，表明今日任务执行完毕 分隔符
 
-        String total = s1 + "\n" + s2 + "\n" + s3 + "\n" + s4;
+        String total = s1 + "\n" + s2 + "\n" + s3 + "\n" + s4 +"\n"+s5;
         String today = LocalDate.now().toString();
 
         messageUtils.sendMessage(today + "【任务执行情况报告】", total);
