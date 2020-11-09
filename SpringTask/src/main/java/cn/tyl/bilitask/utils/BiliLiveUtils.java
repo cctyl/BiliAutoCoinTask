@@ -83,7 +83,7 @@ public class BiliLiveUtils {
      * @author tyl
      * @Time 2020-11-8
      */
-    public void silver2coin() {
+    public boolean silver2coin() {
         String body = "csrf_token=" + data.getBili_jct();
         String post = requestUtil.post("https://api.live.bilibili.com/pay/v1/Exchange/silver2coin", body);
         JsonNode root = null;
@@ -95,9 +95,10 @@ public class BiliLiveUtils {
         String msg = root.get("msg").toPrettyString();
         if (msg.contains("成功")) {
             log.info("兑换成功，银瓜子-700，硬币+1");
-
+            return true;
         } else {
             log.info(msg);
+            return false;
         }
 
 
