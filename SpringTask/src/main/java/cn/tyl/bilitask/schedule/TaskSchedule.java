@@ -10,6 +10,7 @@ import cn.tyl.bilitask.utils.MessageUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class TaskSchedule {
+public class TaskSchedule implements CommandLineRunner {
 
 
     @Autowired
@@ -44,7 +45,7 @@ public class TaskSchedule {
      * 启动任务
      * 每天早上6点01分01秒执行一次
      */
-    @Scheduled(cron = "1 01 6 * * *")
+//    @Scheduled(cron = "1 50 12 * * *")
     public void run() {
 
         //1.投币
@@ -275,4 +276,8 @@ public class TaskSchedule {
     }
 
 
+    @Override
+    public void run(String... args) throws Exception {
+        run();
+    }
 }
